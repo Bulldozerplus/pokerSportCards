@@ -1,1 +1,60 @@
-<p>auth-page works!</p>
+<div class="auth-container">
+  <div class="auth-card">
+    <h1 class="auth-title">Добро пожаловать!</h1>
+
+    <div class="auth-switcher">
+      <button
+        class="auth-switch-btn"
+        [class.active]="isLoginMode()"
+        (click)="switchMode(true)">
+        Вход
+      </button>
+      <button
+        class="auth-switch-btn"
+        [class.active]="!isLoginMode()"
+        (click)="switchMode(false)">
+        Регистрация
+      </button>
+    </div>
+
+    <form class="auth-form" (ngSubmit)="onSubmit()">
+      @if (!isLoginMode()) {
+        <div class="form-group">
+          <input
+            type="text"
+            placeholder="Имя"
+            class="form-input"
+            [ngModel]="authForm().name"
+            (ngModelChange)="updateFormField('name', $event)"
+            name="name">
+        </div>
+      }
+
+      <div class="form-group">
+        <input
+          type="email"
+          placeholder="Email"
+          class="form-input"
+          [ngModel]="authForm().email"
+          (ngModelChange)="updateFormField('email', $event)"
+          name="email"
+          required>
+      </div>
+
+      <div class="form-group">
+        <input
+          type="password"
+          placeholder="Пароль"
+          class="form-input"
+          [ngModel]="authForm().password"
+          (ngModelChange)="updateFormField('password', $event)"
+          name="password"
+          required>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        {{ isLoginMode() ? 'Войти' : 'Зарегистрироваться' }}
+      </button>
+    </form>
+  </div>
+</div>
