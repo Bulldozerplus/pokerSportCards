@@ -1,7 +1,9 @@
-export const API_BASE_URL = 'http://109.195.85.148:8083';
+import { environment } from '../../environments/environment';
+
+export const API_BASE_URL = environment.apiUrl;
 
 
 export const AuthEndpoints = {
-  REGISTER: `${API_BASE_URL}/auth/register`,
-  LOGIN: `${API_BASE_URL}/auth/login`,
+  REGISTER: `${API_BASE_URL}/api/auth/register`,
+  LOGIN: `${API_BASE_URL}/api/auth/login`,
 };
