@@ -10,16 +10,12 @@ export class AuthService {
   registerUser(
     username: string,
     password: string,
-    email: string,
-    firstName: string,
-    lastName: string
+    email: string
   ): Observable<any> {
     const body = {
       username,
       password,
-      email,
-      firstName,
-      lastName
+      email
     };
 
     console.log('Sending registration data:', JSON.stringify(body));
