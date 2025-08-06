@@ -8,8 +8,6 @@ interface AuthForm {
   username: string;
   password: string;
   email: string;
-  firstName: string;
-  lastName: string;
 }
 
 @Component({
@@ -27,9 +25,7 @@ export class AuthComponent {
   readonly authForm = signal<AuthForm>({
     username: '',
     password: '',
-    email: '',
-    firstName: '',
-    lastName: ''
+    email: ''
   });
   readonly errorMessage = signal<string>('');
 
@@ -59,8 +55,7 @@ export class AuthComponent {
         }
       });
     } else {
-      if (!formValue.username || !formValue.password || !formValue.email ||
-        !formValue.firstName || !formValue.lastName) {
+      if (!formValue.username || !formValue.password || !formValue.email) {
         this.errorMessage.set('Все поля обязательны для заполнения');
         return;
       }
@@ -68,9 +63,7 @@ export class AuthComponent {
       this.authService.registerUser(
         formValue.username,
         formValue.password,
-        formValue.email,
-        formValue.firstName,
-        formValue.lastName
+        formValue.email
       ).subscribe({
         next: (response) => {
           console.log('Registration successful', response);
@@ -100,9 +93,7 @@ export class AuthComponent {
     this.authForm.set({
       username: '',
       password: '',
-      email: '',
-      firstName: '',
-      lastName: ''
+      email: ''
     });
   }
 }
