@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+
+  sport_poker_ui:
+    container_name: sport_poker_ui
+    image: sport_poker_card
+    ports:
+      - "82:80"
+    environment:
+      NODE_ENV: dev
+    networks:
+      - poker_net
+
+networks:
+  poker_net:
+    external: true
+
+volumes:
+  poker_psql_vol:
+    external: true
