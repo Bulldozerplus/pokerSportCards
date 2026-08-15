@@ -1,0 +1,65 @@
+pipeline {
+    agent { label 'jenkins_agent' }
+
+    tools {
+        git 'Default'
+        nodejs 'NodeJS 24'
+    }
+
+    stages {
+        stage('Debug') {
+            steps {
+                sh 'pwd'
+                sh 'ls -la'
+            }
+        }
+
+        stage('Check Docker') {
+            steps {
+                sh 'docker --version'
+                sh 'docker info'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh """
+                cd poker-sport-card
+                npm ci
+                """
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh """
+                cd poker-sport-card
+                npm run build
+                """
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build('sport_poker_card:latest', 'poker-sport-card')
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh """
+                cd poker-sport-card
+                docker-compose up -d
+                """
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
